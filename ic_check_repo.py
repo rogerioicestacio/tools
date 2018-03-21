@@ -2,6 +2,7 @@
 from gittle import Gittle
 import os  
 import subprocess
+from subprocess import call
 
 repo_path = '201501262203'
 repo_url = 'https://github.com/fcrdossantos/201501262203.git'
@@ -40,13 +41,14 @@ def check_file(slist):
                 if os.path.isdir(repo_path):
                     if os.path.isfile(os.path.join(repo_path,'tic_tac_toe.py')):
                         files_ok += 1
+                        print('##### %02d Nome: %-35.35s, num:%s ###### '%(files_ok,student_name,repo_path))
                         nota += 0.5
                         rodou = False
                         path_rel = os.path.join(repo_path,'tic_tac_toe.py')
                         try:
-                            subprocess.check_output(["python", path_rel+" -f x -b _________"],
+                            call(["python", path_rel,"-f x","-box__o____"],
                                 stderr=subprocess.STDOUT,
-                                shell=True)
+                                shell=True)    
                             rodou = True
                             nota += 0.5
                         except subprocess.CalledProcessError, e:
@@ -55,7 +57,7 @@ def check_file(slist):
                             rodou = False
                         except IOError, e:
                             print('erro no arquivo')
-                        print('%02d Nome: %-35.35s, arquivo: True, resultado: %r, Nota: %2.2f'%(files_ok,student_name,rodou,nota))
+                        print('-> arquivo: True, resultado: %r, Nota: %2.2f'%(rodou,nota))
             except IOError:
                 print('exception')
     return files_ok    
